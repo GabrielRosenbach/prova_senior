@@ -1,0 +1,30 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext 
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+    http://www.liquibase.org/xml/ns/pro 
+    http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.0.xsd 
+    http://www.liquibase.org/xml/ns/dbchangelog 
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+	<changeSet id="create_produto_servico" author="Gabriel Rosenbach">
+
+		<createTable tableName="produto_servico">
+			<column name="id" type="${uuid_type}"
+				defaultValueComputed="${uuid_function}">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="descricao" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="tipo" type="int" defaultValue="1">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>
