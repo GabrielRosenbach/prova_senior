@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Swagger Users - OpenAPI 3.0
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: produtoServico
+    description: Controle de Produto/Serviço
+paths:
+  /produtoServico:
+    post:
+      tags: 
+      - produtoServico
+      summary: Cadastro de produto ou serviço.
+      description: Cadastro de produto ou serviço.
+      operationId: createProdutoServico
+      requestBody:
+        description: Objeto de cadastro de Produto/Serviço
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadastroProdutoServicoDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CadastroProdutoServicoDTO'
+      responses:
+        '201':
+          description: Cadastro realizado com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoServicoDTO'   
+        '500':
+          description: Ocorreu um erro interno no servidor!
+  
+components:
+  schemas:
+    CadastroProdutoServicoDTO:
+      type: object
+      required: 
+      - descricao
+      - tipo
+      properties:
+        descricao:
+          type: string
+          example: Descrição Exemplo
+        tipo:
+          type: integer
+          description: 1 - Produto; 2 - Serviço;
+          example: 1
+    ProdutoServicoDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+        descricao:
+          type: string
+          example: Descrição Exemplo
+        tipo:
+          type: integer
+          description: 1 - Produto; 2 - Serviço;
+          example: 1
