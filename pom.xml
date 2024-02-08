@@ -18,7 +18,6 @@
 
 	<properties>
 		<java.version>17</java.version>
-    	<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
 
 	<dependencies>
@@ -87,7 +86,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.28</version>
+			<!--<version>1.18.28</version>-->
 			<scope>provided</scope>
 		</dependency>
 
@@ -112,7 +111,7 @@
 		<dependency>
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
-			<version>3.0.2</version>
+			<!--<version>3.0.2</version>-->
 		</dependency>
 
 		<dependency>
@@ -136,12 +135,14 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
+
 		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.0</version>
 		</dependency>
 	</dependencies>
 
@@ -166,7 +167,7 @@
 								${project.basedir}/src/main/resources/swagger.yaml
 							</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>com.senior.prova.application.controller</apiPackage>
+							<apiPackage>com.senior.prova.application.api</apiPackage>
 							<modelPackage>com.senior.prova.application.dto</modelPackage>
 							<supportingFilesToGenerate>
 								ApiUtil.java
@@ -181,24 +182,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<source>${java.version}</source> <!-- depending on your project -->
-					<target>${java.version}</target> <!-- depending on your project -->
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.mapstruct</groupId>
-							<artifactId>mapstruct-processor</artifactId>
-							<version>${org.mapstruct.version}</version>
-						</path>
-						<!-- other annotation processors -->
-					</annotationProcessorPaths>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -18,8 +18,7 @@ paths:
     post:
       tags: 
       - produtoServico
-      summary: Cadastro de produto ou serviço.
-      description: Cadastro de produto ou serviço.
+      summary: Cadastro de Produto/Serviço.
       operationId: createProdutoServico
       requestBody:
         description: Objeto de cadastro de Produto/Serviço
@@ -31,15 +30,92 @@ paths:
             schema:
               $ref: '#/components/schemas/CadastroProdutoServicoDTO'
       responses:
-        '201':
+        201:
           description: Cadastro realizado com sucesso!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProdutoServicoDTO'   
-        '500':
-          description: Ocorreu um erro interno no servidor!
-  
+                $ref: '#/components/schemas/ProdutoServicoDTO'
+    get:
+      tags: 
+      - produtoServico
+      summary: Lista todos os Produto/Serviço.
+      operationId: listProdutoServico
+      responses:
+        200:
+          description: Listagem realiza com sucesso!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProdutoServicoDTO'
+  /produtoServico/{id}:
+    get:
+      tags:
+        - produtoServico
+      summary: Busca um Produto/Serviço através do UUID.
+      operationId: readProdutoServico
+      parameters:
+        - name: id
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: 'ID do Produto/Serviço'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Busca realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoServicoDTO'
+    put:
+      tags:
+        - produtoServico
+      summary: Atualiza um Produto/Serviço através do UUID.
+      operationId: updateProdutoServico
+      requestBody:
+        description: Objeto de atualização de Produto/Serviço
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadastroProdutoServicoDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CadastroProdutoServicoDTO'
+      parameters:
+        - name: id
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: 'ID do Produto/Serviço'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Atualização realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoServicoDTO'
+    delete:
+      tags:
+        - produtoServico
+      summary: Exclui um Produto/Serviço através do UUID.
+      operationId: deleteProdutoServico
+      parameters:
+        - name: id
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: 'ID do Produto/Serviço'
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Exclusão realizada com sucesso!
 components:
   schemas:
     CadastroProdutoServicoDTO:
