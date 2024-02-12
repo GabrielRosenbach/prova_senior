@@ -2,7 +2,6 @@ package com.senior.application.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import com.senior.prova.application.dto.CadastroPedidoDTO;
@@ -34,6 +33,11 @@ public class Pedido {
 	 * Desconto do pedido
 	 */
 	private Float desconto;
+
+	/**
+	 * Situação do Pedido; 1 - Aberto; 2 - Fechado. (SituaçãoPedidoEnum)
+	 */
+	private Integer situacao;
 
 	/**
 	 * Valor total do pedido
@@ -85,26 +89,12 @@ public class Pedido {
 		this.itens = itens;
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(desconto, id, itens, total);
+	public Integer getSituacao() {
+		return situacao;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pedido other = (Pedido) obj;
-		return Objects.equals(desconto, other.desconto) && Objects.equals(id, other.id)
-				&& Objects.equals(itens, other.itens) && Objects.equals(total, other.total);
+	public void setSituacao(Integer situacao) {
+		this.situacao = situacao;
 	}
 
-	@Override
-	public String toString() {
-		return "Pedido [id=" + id + ", desconto=" + desconto + ", total=" + total + ", itens=" + itens + "]";
-	}
 }

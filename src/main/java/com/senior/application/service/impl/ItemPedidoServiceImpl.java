@@ -13,8 +13,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.senior.application.constants.MensagemServidor;
+import com.senior.application.enums.SituacaoProdutoServicoEnum;
 import com.senior.application.enums.TipoProdutoServicoEnum;
 import com.senior.application.exceptions.http.InternalErrorException;
+import com.senior.application.facade.PedidoFacade;
 import com.senior.application.model.ItemPedido;
 import com.senior.application.model.Pedido;
 import com.senior.application.model.ProdutoServico;
@@ -43,6 +45,8 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 	public ItemPedido createItemPedido(UUID idPedido, CadastroItemPedidoDTO cadastroItemPedidoDTO) {
 		Pedido pedido = OptionalUtil.tratarOptional(pedidoRepository.findById(idPedido),
 				MensagemServidor.PEDIDO_NAO_ENCONTRADO);
+
+		PedidoFacade.validarSituacaoFechada(pedido);
 		return itemPedidoRepository.save(validarItem(Optional.ofNullable(idPedido), Optional.ofNullable(pedido),
 				UUID.fromString(cadastroItemPedidoDTO.getIdProdutoServico()), cadastroItemPedidoDTO.getQuantidade()));
 	}
@@ -51,6 +55,8 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 	public void deleteItemPedido(UUID idPedido, UUID idProdutoServico) {
 		Pedido pedido = OptionalUtil.tratarOptional(pedidoRepository.findById(idPedido),
 				MensagemServidor.PEDIDO_NAO_ENCONTRADO);
+
+		PedidoFacade.validarSituacaoFechada(pedido);
 		pedido.getItens().removeIf(item -> item.getItemPedidoId().getIdProdutoServico().equals(idProdutoServico));
 		pedidoRepository.save(pedido);
 	}
@@ -97,7 +103,7 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 	@Override
 	public List<ItemPedido> updateItensPedido(UUID idPedido, List<CadastroItemPedidoDTO> listCadastroItemPedidoDTO) {
 		List<ItemPedido> listItemPedido = listCadastroItemPedidoDTO.stream()
-				.map(cadastroItemDTO -> validarItem(Optional.ofNullable(idPedido), null,
+				.map(cadastroItemDTO -> validarItem(Optional.ofNullable(idPedido), Optional.empty(),
 						UUID.fromString(cadastroItemDTO.getIdProdutoServico()), cadastroItemDTO.getQuantidade()))
 				.collect(Collectors.toList());
 
@@ -109,6 +115,10 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 			Integer quantidade) {
 
 		ProdutoServico produtoServico = produtoServicoService.readProdutoServico(idProdutoServico);
+		
+		if (produtoServico.getSituacao().equals(SituacaoProdutoServicoEnum.DESATIVADO.getCodigo())) {
+			throw new InternalErrorException(MensagemServidor.ADICIONAR_ITEM_PRODUTO_SERVICO_DESATIVADO);
+		}
 
 		Boolean isProduto = TipoProdutoServicoEnum.PRODUTO.getCodigo().equals(produtoServico.getTipo());
 		Boolean semQuantidade = IntegerUtil.isNullOrZero(quantidade);
@@ -133,10 +143,13 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 			if (optPedido.isEmpty()) {
 				throw new InternalErrorException(MensagemServidor.NAO_INFORMADO_PEDIDO_PARA_ITEM);
 			}
+
+			PedidoFacade.validarSituacaoFechada(optPedido.get());
 			itemPedido.setPedido(optPedido.get());
 			itemPedido.setProdutoServico(produtoServico);
 		} else {
 			itemPedido = optItemPedido.get();
+			PedidoFacade.validarSituacaoFechada(itemPedido.getPedido());
 		}
 
 		itemPedido.setQuantidade(isProduto ? quantidade : null);

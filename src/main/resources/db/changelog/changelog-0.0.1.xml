@@ -69,11 +69,28 @@
 		<addForeignKeyConstraint baseColumnNames="id_produto_servico"
 			baseTableName="item_pedido"
 			constraintName="produto_servico_item_pedido_fk"
-			onDelete="CASCADE"
+			onDelete="RESTRICT"
 			onUpdate="CASCADE"
 			referencedColumnNames="id"
 			referencedTableName="produto_servico"
 			validate="true" />
 	</changeSet>
+
+	<changeSet id="pedido_add_situacao" author="Gabriel Rosenbach">
+		<addColumn tableName="pedido">
+			<column name="situacao" type="int" defaultValue="1">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="produto_servico_add_situacao" author="Gabriel Rosenbach">
+		<addColumn tableName="produto_servico">
+			<column name="situacao" type="int" defaultValue="1">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+
 
 </databaseChangeLog>

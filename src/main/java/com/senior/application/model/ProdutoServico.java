@@ -39,6 +39,11 @@ public class ProdutoServico {
 	 */
 	private Integer tipo;
 
+	/**
+	 * Situação do Produto/Serviço. 1 - Ativado; 2 - Desativado (SituacaoProdutoServicoEnum)
+	 */
+	private Integer situacao;
+
 	public ProdutoServico() {
 	}
 
@@ -80,23 +85,11 @@ public class ProdutoServico {
 		this.tipo = tipo;
 	}
 
-	/*
-	 * public List<ItemPedido> getItens() { return itens; }
-	 * 
-	 * public void setItens(List<ItemPedido> itens) { this.itens = itens; }
-	 * 
-	 * @Override public int hashCode() { return Objects.hash(descricao, id, itens,
-	 * preco, tipo); }
-	 * 
-	 * @Override public boolean equals(Object obj) { if (this == obj) return true;
-	 * if (obj == null) return false; if (getClass() != obj.getClass()) return
-	 * false; ProdutoServico other = (ProdutoServico) obj; return
-	 * Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id) &&
-	 * Objects.equals(itens, other.itens) && Objects.equals(preco, other.preco) &&
-	 * Objects.equals(tipo, other.tipo); }
-	 * 
-	 * @Override public String toString() { return "ProdutoServico [id=" + id +
-	 * ", descricao=" + descricao + ", preco=" + preco + ", tipo=" + tipo +
-	 * ", itens=" + itens + "]"; }
-	 */
+	public Integer getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Integer situacao) {
+		this.situacao = situacao;
+	}
 }

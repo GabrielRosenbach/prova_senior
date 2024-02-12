@@ -10,13 +10,16 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.senior.application.constants.MensagemServidor;
+import com.senior.application.enums.SituacaoPedidoEnum;
 import com.senior.application.enums.TipoProdutoServicoEnum;
+import com.senior.application.facade.PedidoFacade;
 import com.senior.application.model.ItemPedido;
 import com.senior.application.model.Pedido;
 import com.senior.application.model.ProdutoServico;
 import com.senior.application.repository.PedidoRepository;
 import com.senior.application.service.ItemPedidoService;
 import com.senior.application.service.PedidoService;
+import com.senior.application.util.IntegerUtil;
 import com.senior.application.util.OptionalUtil;
 import com.senior.prova.application.dto.CadastroItemPedidoDTO;
 import com.senior.prova.application.dto.CadastroPedidoDTO;
@@ -38,6 +41,9 @@ public class PedidoServiceImpl implements PedidoService {
 
 		Pedido pedido = new Pedido();
 		pedido.setDesconto(cadastroPedidoDTO.getDesconto().floatValue());
+		pedido.setSituacao(
+				IntegerUtil.isNullOrZero(cadastroPedidoDTO.getSituacao()) ? SituacaoPedidoEnum.ABERTO.getCodigo()
+						: cadastroPedidoDTO.getSituacao());
 		pedido.setItens(gerarItemPedido(null, pedido, cadastroPedidoDTO.getItens()));
 		pedido.setTotal(calcularTotal(pedido));
 
@@ -72,7 +78,8 @@ public class PedidoServiceImpl implements PedidoService {
 
 	@Override
 	public void deletePedido(UUID id) {
-		readPedido(id);
+		Pedido pedido = readPedido(id);
+		PedidoFacade.validarSituacaoFechada(pedido);
 		pedidoRepository.deleteById(id);
 	}
 
@@ -91,7 +98,10 @@ public class PedidoServiceImpl implements PedidoService {
 	@Override
 	public Pedido updatePedido(UUID id, CadastroPedidoDTO cadastroPedidoDTO) {
 		Pedido pedido = readPedido(id);
-
+		
+		PedidoFacade.validarSituacaoFechada(pedido);
+		pedido.setSituacao(cadastroPedidoDTO.getSituacao());
+		
 		pedido.setDesconto(cadastroPedidoDTO.getDesconto().floatValue());
 		pedido.setItens(gerarItemPedido(id, pedido, cadastroPedidoDTO.getItens()));
 		pedido.setTotal(calcularTotal(pedido));

@@ -499,6 +499,7 @@ components:
       - descricao
       - preco
       - tipo
+      - situacao
       properties:
         descricao:
           type: string
@@ -510,6 +511,9 @@ components:
           type: integer
           description: 1 - Produto; 2 - Serviço;
           example: 1
+        situacao:
+          type: integer
+          description: Situação do produto/serviço; 1 - Ativado; 2 - Desativado
     ProdutoServicoDTO:
       type: object
       properties:
@@ -526,11 +530,17 @@ components:
           type: integer
           description: 1 - Produto; 2 - Serviço;
           example: 1
+        situacao:
+          type: integer
+          description: Situação do produto/serviço; 1 - Ativado; 2 - Desativado
     CadastroPedidoDTO:
       type: object
       required: 
       - itens
       properties:
+        situacao:
+          type: integer
+          description: Situação do pedido; 1 - Aberto; 2 - Fechado
         desconto:
           type: number
           example: 20
@@ -550,6 +560,10 @@ components:
         total:
           type: number
           example: 20
+        situacao:
+          type: integer
+          description: Situação do pedido; 1 - Aberto; 2 - Fechado
+          example: 1
         itens:
           type: array
           items:
