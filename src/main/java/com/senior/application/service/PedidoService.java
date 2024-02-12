@@ -12,7 +12,7 @@ public interface PedidoService {
 
 	public void deletePedido(UUID id);
 
-	public List<Pedido> listPedido();
+	public List<Pedido> listPedido(Integer inicio, Integer tamanho, Boolean ascendente, String campoOrderBy);
 
 	public Pedido readPedido(UUID id);
 

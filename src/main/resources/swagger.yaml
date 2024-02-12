@@ -45,6 +45,35 @@ paths:
       - produtoServico
       summary: Lista todos os Produto/Serviço.
       operationId: listProdutoServico
+      parameters:
+        - name: inicio
+          in: query
+          example: 5
+          required: true
+          description: Inicio da paginação. 
+          schema:
+            type: integer
+        - name: tamanho
+          in: query
+          example: 10
+          required: true
+          description: Quantidade dei itens por paginação. 
+          schema:
+            type: integer
+        - name: ascendente
+          in: query
+          example: true
+          required: true
+          description: Se a direção é ascendente ou descendente.
+          schema:
+            type: boolean
+        - name: campoOrderBy
+          in: query
+          example: descricao
+          required: true
+          description: Nome do campo que será ordenado
+          schema:
+            type: string
       responses:
         200:
           description: Listagem realiza com sucesso!
@@ -147,6 +176,35 @@ paths:
       - pedido
       summary: Listagem de pedido.
       operationId: listPedido
+      parameters: 
+        - name: inicio
+          in: query
+          example: 5
+          required: true
+          description: Inicio da paginação. 
+          schema:
+            type: integer
+        - name: tamanho
+          in: query
+          example: 10
+          required: true
+          description: Quantidade dei itens por paginação. 
+          schema:
+            type: integer
+        - name: ascendente
+          in: query
+          example: true
+          required: true
+          description: Se a direção é ascendente ou descendente.
+          schema:
+            type: boolean
+        - name: campoOrderBy
+          in: query
+          example: descricao
+          required: true
+          description: Nome do campo que será ordenado
+          schema:
+            type: string
       responses:
         200:
           description: Listagem realiza com sucesso!
@@ -228,6 +286,35 @@ paths:
       - itemPedido
       summary: Lista todos os Itens de todos os Pedidos.
       operationId: listItensPedidos
+      parameters: 
+        - name: inicio
+          in: query
+          example: 5
+          required: true
+          description: Inicio da paginação. 
+          schema:
+            type: integer
+        - name: tamanho
+          in: query
+          example: 10
+          required: true
+          description: Quantidade dei itens por paginação. 
+          schema:
+            type: integer
+        - name: ascendente
+          in: query
+          example: true
+          required: true
+          description: Se a direção é ascendente ou descendente.
+          schema:
+            type: boolean
+        - name: campoOrderBy
+          in: query
+          example: descricao
+          required: true
+          description: Nome do campo que será ordenado
+          schema:
+            type: string
       responses:
         200:
           description: Listagem realiza com sucesso!
@@ -278,6 +365,34 @@ paths:
           example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
           description: 'ID do Pedido'
           required: true
+          schema:
+            type: string
+        - name: inicio
+          in: query
+          example: 5
+          required: true
+          description: Inicio da paginação. 
+          schema:
+            type: integer
+        - name: tamanho
+          in: query
+          example: 10
+          required: true
+          description: Quantidade dei itens por paginação. 
+          schema:
+            type: integer
+        - name: ascendente
+          in: query
+          example: true
+          required: true
+          description: Se a direção é ascendente ou descendente.
+          schema:
+            type: boolean
+        - name: campoOrderBy
+          in: query
+          example: descricao
+          required: true
+          description: Nome do campo que será ordenado
           schema:
             type: string
       responses:

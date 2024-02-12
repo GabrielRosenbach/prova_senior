@@ -30,6 +30,7 @@ public class ProdutoServicoControllerImpl implements ProdutoServicoApi {
 
 	/**
 	 * Cria um Produto/Serviço
+	 * 
 	 * @param cadastroProdutoServicoDTO Objeto de cadatro de produto/Serviço
 	 * @return Respectivo ProdutoServicoDTO
 	 */
@@ -43,14 +44,11 @@ public class ProdutoServicoControllerImpl implements ProdutoServicoApi {
 				.body(produtoServicoDTO);
 	}
 
-	/**
-	 * lista os produtos/Serviços
-	 * @return Lista de ProdutoServicoDTO
-	 */
 	@Override
-	public ResponseEntity<List<ProdutoServicoDTO>> listProdutoServico() {
-
-		List<ProdutoServicoDTO> listaProdutoServicoDTO = modelMapper.map(produtoServicoService.list(),
+	public ResponseEntity<List<ProdutoServicoDTO>> listProdutoServico(Integer inicio, Integer tamanho,
+			Boolean ascendente, String campoOrderBy) {
+		List<ProdutoServicoDTO> listaProdutoServicoDTO = modelMapper.map(
+				produtoServicoService.listProdutoServico(inicio, tamanho, ascendente, campoOrderBy),
 				new TypeToken<List<ProdutoServicoDTO>>() {
 				}.getType());
 
@@ -59,6 +57,7 @@ public class ProdutoServicoControllerImpl implements ProdutoServicoApi {
 
 	/**
 	 * Busca um produto/Seviço
+	 * 
 	 * @param id UUID do Produto/Serviço em formato String
 	 * @return Respectivo ProdutoServicoDTO
 	 */
@@ -75,7 +74,8 @@ public class ProdutoServicoControllerImpl implements ProdutoServicoApi {
 
 	/**
 	 * Atualiza um produto/Serviço
-	 * @param id UUID do Produto/Serviço em formato String
+	 * 
+	 * @param id                        UUID do Produto/Serviço em formato String
 	 * @param cadastroProdutoServicoDTO Objeto de cadastro de Produto/Serviço
 	 * @return Respectivo ProdutoServicoDTO
 	 */
@@ -95,6 +95,7 @@ public class ProdutoServicoControllerImpl implements ProdutoServicoApi {
 
 	/**
 	 * Deleta um Produto/Serviço
+	 * 
 	 * @param id UUID do Produto/Serviço em formato String
 	 */
 	@Override

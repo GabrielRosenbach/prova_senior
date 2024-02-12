@@ -11,6 +11,7 @@ import com.senior.application.model.ProdutoServico;
  * Repositório do Produto/Serviço
  */
 @Repository
-public interface ProdutoServicoRepository extends JpaRepository<ProdutoServico, UUID> {
-	
+public interface ProdutoServicoRepository
+		extends JpaRepository<ProdutoServico, UUID> {
+
 }

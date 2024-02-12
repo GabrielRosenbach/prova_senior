@@ -31,10 +31,11 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 	private PedidoService pedidoService;
 
 	private ModelMapper modelMapper = new ModelMapper();
-	
+
 	/**
 	 * Requisição que cria um novo item no pedido
-	 * @param strIdPedido UUID do pedido em formato String.
+	 * 
+	 * @param strIdPedido           UUID do pedido em formato String.
 	 * @param cadastroItemPedidoDTO Objeto de cadastro de um item do pedido
 	 * @return Um ResponseEntity create com o item adicionado
 	 */
@@ -54,9 +55,10 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 
 		return ResponseEntity.created(URI.create(uriStr.toString())).body(mapToDTO(itemPedido));
 	}
-	
+
 	/**
 	 * Método interno que faz a conversão do Modelo para DTO
+	 * 
 	 * @param itemPedido Modelo do Item do pedido
 	 * @return A conversão do modelo em ItemPedidoDTO
 	 */
@@ -68,6 +70,7 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 
 	/**
 	 * Método interno que faz a conversão de uma lista de modelos para DTOs
+	 * 
 	 * @param listItensPedidos Lista de modelos de ItemPedido
 	 * @return Lista convertida de ItemPedidoDTO
 	 */
@@ -77,7 +80,8 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 
 	/**
 	 * Deleta um item do pedido
-	 * @param strIdPedido UUID do pedido em formato String
+	 * 
+	 * @param strIdPedido      UUID do pedido em formato String
 	 * @param idProdutoServico UUID do Produto/Serviço em formato String
 	 */
 	@Override
@@ -92,28 +96,24 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 		}
 	}
 
-	/**
-	 * Busca os itens de um pedido
-	 * @param idPedido UUID do pedido em formato String
-	 * @return Lista de ItemPedidoDTO
-	 */
 	@Override
-	public ResponseEntity<List<ItemPedidoDTO>> listItensPedido(String idPedido) {
-		return ResponseEntity.ok().body(mapToDTO(itemPedidoService.listItensPedido(UUID.fromString(idPedido))));
+	public ResponseEntity<List<ItemPedidoDTO>> listItensPedido(String idPedido, Integer inicio, Integer tamanho,
+			Boolean ascendente, String campoOrderBy) {
+		return ResponseEntity.ok().body(mapToDTO(itemPedidoService.listItensPedido(UUID.fromString(idPedido), inicio,
+				tamanho, ascendente, campoOrderBy)));
 	}
 
-	/**
-	 * Busca todos os itens de pedido
-	 * @return Lista de ItemPedidoDTO
-	 */
 	@Override
-	public ResponseEntity<List<ItemPedidoDTO>> listItensPedidos() {
-		return ResponseEntity.ok().body(mapToDTO(itemPedidoService.listItensPedidos()));
+	public ResponseEntity<List<ItemPedidoDTO>> listItensPedidos(Integer inicio, Integer tamanho, Boolean ascendente,
+			String campoOrderBy) {
+		return ResponseEntity.ok()
+				.body(mapToDTO(itemPedidoService.listItensPedidos(inicio, tamanho, ascendente, campoOrderBy)));
 	}
 
 	/**
 	 * Busca um Item de um pedido
-	 * @param idPedido UUID do Pedido em formato String
+	 * 
+	 * @param idPedido         UUID do Pedido em formato String
 	 * @param idProdutoServico UUID do Produto/Serviço em formato String
 	 * @return O respectivo ItemPedidoDTO
 	 */
@@ -129,7 +129,8 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 
 	/**
 	 * Atualiza uma lista de itens de um pedido
-	 * @param strIdPedido UUID do Pedido em formato String
+	 * 
+	 * @param strIdPedido           UUID do Pedido em formato String
 	 * @param cadastroItemPedidoDTO Lista de objetos de Cadastro dos itens
 	 * @return Lista dos itens atualizados
 	 */

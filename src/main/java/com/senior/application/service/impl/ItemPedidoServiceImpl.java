@@ -6,6 +6,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.senior.application.constants.MensagemServidor;
@@ -37,14 +41,16 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 
 	@Override
 	public ItemPedido createItemPedido(UUID idPedido, CadastroItemPedidoDTO cadastroItemPedidoDTO) {
-		Pedido pedido = OptionalUtil.tratarOptional(pedidoRepository.findById(idPedido), MensagemServidor.PEDIDO_NAO_ENCONTRADO);
+		Pedido pedido = OptionalUtil.tratarOptional(pedidoRepository.findById(idPedido),
+				MensagemServidor.PEDIDO_NAO_ENCONTRADO);
 		return itemPedidoRepository.save(validarItem(Optional.ofNullable(idPedido), Optional.ofNullable(pedido),
 				UUID.fromString(cadastroItemPedidoDTO.getIdProdutoServico()), cadastroItemPedidoDTO.getQuantidade()));
 	}
 
 	@Override
 	public void deleteItemPedido(UUID idPedido, UUID idProdutoServico) {
-		Pedido pedido = OptionalUtil.tratarOptional(pedidoRepository.findById(idPedido), MensagemServidor.PEDIDO_NAO_ENCONTRADO);
+		Pedido pedido = OptionalUtil.tratarOptional(pedidoRepository.findById(idPedido),
+				MensagemServidor.PEDIDO_NAO_ENCONTRADO);
 		pedido.getItens().removeIf(item -> item.getItemPedidoId().getIdProdutoServico().equals(idProdutoServico));
 		pedidoRepository.save(pedido);
 	}
@@ -56,13 +62,36 @@ public class ItemPedidoServiceImpl implements ItemPedidoService {
 	}
 
 	@Override
-	public List<ItemPedido> listItensPedidos() {
-		return itemPedidoRepository.findAll();
+	public List<ItemPedido> listItensPedidos(Integer inicio, Integer tamanho, Boolean ascendente, String campoOrderBy) {
+		campoOrderBy = validarCampoOrderBy(campoOrderBy);
+		return itemPedidoRepository
+				.findAll(PageRequest.of(inicio, tamanho, ascendente ? Direction.ASC : Direction.DESC, campoOrderBy))
+				.toList();
+	}
+	
+	private String validarCampoOrderBy(String campoOrderBy) {
+		if ((campoOrderBy.contains("idPedido") || campoOrderBy.contains("idProdutoServico"))
+				&& !campoOrderBy.contains("itemPedidoId")) {
+			return "itemPedidoId." + campoOrderBy;
+		}
+		
+		return campoOrderBy;
 	}
 
 	@Override
-	public List<ItemPedido> listItensPedido(UUID idPedido) {
-		return itemPedidoRepository.findByItemPedidoId_IdPedido(idPedido);
+	public List<ItemPedido> listItensPedido(UUID idPedido, Integer inicio, Integer tamanho, Boolean ascendente,
+			String campoOrderBy) {
+
+		campoOrderBy = validarCampoOrderBy(campoOrderBy);
+
+		ItemPedido itemPedido = new ItemPedido();
+		itemPedido.getItemPedidoId().setIdPedido(idPedido);
+
+		Example<ItemPedido> example = Example.of(itemPedido, ExampleMatcher.matching());
+		return itemPedidoRepository
+				.findAll(example,
+						PageRequest.of(inicio, tamanho, ascendente ? Direction.ASC : Direction.DESC, campoOrderBy))
+				.toList();
 	}
 
 	@Override

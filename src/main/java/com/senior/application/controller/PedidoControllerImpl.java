@@ -32,6 +32,7 @@ public class PedidoControllerImpl implements PedidoApi {
 
 	/**
 	 * Cria um novo pedido
+	 * 
 	 * @param cadastroPedidoDTO Objeto de cadastro do Pedido
 	 * @return PedidoDTO criado.
 	 */
@@ -44,6 +45,7 @@ public class PedidoControllerImpl implements PedidoApi {
 
 	/**
 	 * Exclui um pedido
+	 * 
 	 * @param id UUID do pedido em formato String
 	 */
 	@Override
@@ -56,18 +58,16 @@ public class PedidoControllerImpl implements PedidoApi {
 		}
 	}
 
-	/**
-	 * Lista os pedidos
-	 * @return Lista de PedidoDTO
-	 */
 	@Override
-	public ResponseEntity<List<PedidoDTO>> listPedido() {
-		return ResponseEntity.ok()
-				.body(pedidoService.listPedido().stream().map(pedido -> mapToDTO(pedido)).collect(Collectors.toList()));
+	public ResponseEntity<List<PedidoDTO>> listPedido(Integer inicio, Integer tamanho, Boolean ascendente,
+			String campoOrderBy) {
+		return ResponseEntity.ok().body(pedidoService.listPedido(inicio, tamanho, ascendente, campoOrderBy).stream()
+				.map(pedido -> mapToDTO(pedido)).collect(Collectors.toList()));
 	}
 
 	/**
 	 * Busca um pedido
+	 * 
 	 * @param id UUID do pedido em formato String
 	 * @return O respectivo PedidoDTO
 	 */
@@ -82,6 +82,7 @@ public class PedidoControllerImpl implements PedidoApi {
 
 	/**
 	 * Faz o mapeamento de modelo para DTO
+	 * 
 	 * @param pedido Modelo do Pedido
 	 * @return PedidoDTO convertido
 	 */
@@ -100,7 +101,8 @@ public class PedidoControllerImpl implements PedidoApi {
 
 	/**
 	 * Atualiza um pedido
-	 * @param id UUID do pedido em formato String
+	 * 
+	 * @param id                UUID do pedido em formato String
 	 * @param cadastroPedidoDTO Objeto de cadastro do Pedido
 	 * @return Respectivo PedidoDTO
 	 */

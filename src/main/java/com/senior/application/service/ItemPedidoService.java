@@ -16,9 +16,9 @@ public interface ItemPedidoService {
 
 	public ItemPedido readItemPedido(UUID idPedido, UUID idProdutoServico);
 
-	public List<ItemPedido> listItensPedidos();
+	public List<ItemPedido> listItensPedidos(Integer inicio, Integer tamanho, Boolean ascendente, String campoOrderBy);
 
-	public List<ItemPedido> listItensPedido(UUID fromString);
+	public List<ItemPedido> listItensPedido(UUID idPedido, Integer inicio, Integer tamanho, Boolean ascendente, String campoOrderBy);
 
 	public List<ItemPedido> updateItensPedido(UUID idPedido, List<CadastroItemPedidoDTO> listCadastroItemPedidoDTO);
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +33,8 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 
 	@Override
 	public ProdutoServico readProdutoServico(UUID id) {
-		return OptionalUtil.tratarOptional(produtoServicoRepository.findById(id), MensagemServidor.PRODUTO_SERVICO_NAO_ENCONTRADO);
+		return OptionalUtil.tratarOptional(produtoServicoRepository.findById(id),
+				MensagemServidor.PRODUTO_SERVICO_NAO_ENCONTRADO);
 	}
 
 	@Override
@@ -47,19 +50,17 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 
 	@Override
 	public void deleteProdutoServico(UUID id) {
-		//Lança NotFoundException caso o id não exista
+		// Lança NotFoundException caso o id não exista
 		readProdutoServico(id);
 		produtoServicoRepository.deleteById(id);
 	}
 
 	@Override
-	public List<ProdutoServico> list() {
-		return produtoServicoRepository.findAll();
-	}
-
-	@Override
-	public List<ProdutoServico> list(List<UUID> listId) {
-		return produtoServicoRepository.findAllById(listId);
+	public List<ProdutoServico> listProdutoServico(Integer inicio, Integer tamanho, Boolean ascendente,
+			String campoOrderBy) {
+		return produtoServicoRepository
+				.findAll(PageRequest.of(inicio, tamanho, ascendente ? Direction.ASC : Direction.DESC, campoOrderBy))
+				.toList();
 	}
 
 	@Override

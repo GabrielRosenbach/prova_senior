@@ -12,5 +12,4 @@ import com.senior.application.model.Pedido;
  */
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
-	
 }

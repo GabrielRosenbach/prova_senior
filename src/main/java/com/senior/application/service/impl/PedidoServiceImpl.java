@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.senior.application.constants.MensagemServidor;
@@ -75,8 +77,10 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	@Override
-	public List<Pedido> listPedido() {
-		return pedidoRepository.findAll();
+	public List<Pedido> listPedido(Integer inicio, Integer tamanho, Boolean ascendente, String campoOrderBy) {
+		return pedidoRepository
+				.findAll(PageRequest.of(inicio, tamanho, ascendente ? Direction.ASC : Direction.DESC, campoOrderBy))
+				.toList();
 	}
 
 	@Override
