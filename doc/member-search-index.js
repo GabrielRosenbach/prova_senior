@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.senior.application.repository","c":"ItemPedidoRepository","l":"findByItemPedidoId_IdPedido(UUID)","u":"findByItemPedidoId_IdPedido(java.util.UUID)"}];updateSearchResults();

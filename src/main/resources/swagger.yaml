@@ -13,6 +13,10 @@ servers:
 tags:
   - name: produtoServico
     description: Controle de Produto/Serviço
+  - name: pedido
+    description: Controle de Pedido
+  - name: itemPedido
+    description: Controle de Item do Pedido
 paths:
   /produtoServico:
     post:
@@ -116,17 +120,277 @@ paths:
       responses:
         204:
           description: Exclusão realizada com sucesso!
+  /pedido:
+    post:
+      tags: 
+      - pedido
+      summary: Cadastro de Pedido.
+      operationId: createPedido
+      requestBody:
+        description: Objeto de cadastro de Produto/Serviço
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadastroPedidoDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CadastroPedidoDTO'
+      responses:
+        201:
+          description: Cadastro realizado com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoDTO'
+    get:
+      tags: 
+      - pedido
+      summary: Listagem de pedido.
+      operationId: listPedido
+      responses:
+        200:
+          description: Listagem realiza com sucesso!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PedidoDTO'
+  /pedido/{id}:
+    get:
+      tags:
+        - pedido
+      summary: Busca um Pedido através do UUID.
+      operationId: readPedido
+      parameters:
+        - name: id
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do Pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Busca realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoDTO'
+    put:
+      tags:
+        - pedido
+      summary: Atualiza um Pedido através do UUID.
+      operationId: updatePedido
+      requestBody:
+        description: Objeto de atualização de Pedido
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadastroPedidoDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CadastroPedidoDTO'
+      parameters:
+        - name: id
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description:  UUID do Pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Atualização realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoDTO'
+    delete:
+      tags:
+        - pedido
+      summary: Exclui um Pedido através do UUID.
+      operationId: deletePedido
+      parameters:
+        - name: id
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do Pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Exclusão realizada com sucesso!
+  /itemPedido:
+    get:
+      tags: 
+      - itemPedido
+      summary: Lista todos os Itens de todos os Pedidos.
+      operationId: listItensPedidos
+      responses:
+        200:
+          description: Listagem realiza com sucesso!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemPedidoDTO'
+  /itemPedido/{idPedido}:
+    post:
+      tags: 
+      - itemPedido
+      summary: Cadastro de Item do Pedido
+      operationId: createItemPedido
+      parameters:
+        - name: idPedido
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: 'ID do Pedido'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Objeto de cadastro de Item do Pedido
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadastroItemPedidoDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CadastroItemPedidoDTO'
+      responses:
+        201:
+          description: Cadastro realizado com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemPedidoDTO'
+    get:
+      tags:
+        - itemPedido
+      summary: Lista Itens de um Pedido
+      operationId: listItensPedido
+      parameters:
+        - name: idPedido
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: 'ID do Pedido'
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Listagem realiza com sucesso!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemPedidoDTO'
+    put:
+      tags:
+        - itemPedido
+      summary: Atualiza uma lista de Itens do pedido
+      operationId: updateItensPedido
+      requestBody:
+        description: Objeto de atualização de Pedido
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CadastroItemPedidoDTO'
+          application/xml:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CadastroItemPedidoDTO'
+      parameters:
+        - name: idPedido
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do Pedido
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Atualização realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemPedidoDTO'
+    
+  /itemPedido/{idPedido}/{idProdutoServico}:
+    get:
+      tags:
+        - itemPedido
+      summary: Busca um item de um Pedido
+      operationId: readItemPedido
+      parameters:
+        - name: idPedido
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do Pedido
+          required: true
+          schema:
+            type: string
+        - name: idProdutoServico
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do produto/servico
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Busca realizada com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemPedidoDTO'
+    delete:
+      tags:
+        - itemPedido
+      summary: Exclui um Item do pedido através do UUID do pedido e do produto/serviço.
+      operationId: deleteItemPedido
+      parameters:
+        - name: idPedido
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do Pedido
+          required: true
+          schema:
+            type: string
+        - name: idProdutoServico
+          in: path
+          example: e6bf2e78-b72c-494e-a8b2-eebc35b8dcbe
+          description: UUID do produto/servico
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Exclusão realizada com sucesso!
 components:
   schemas:
     CadastroProdutoServicoDTO:
       type: object
       required: 
       - descricao
+      - preco
       - tipo
       properties:
         descricao:
           type: string
           example: Descrição Exemplo
+        preco:
+          type: number
+          example: Preço do Produto/Serviço
         tipo:
           type: integer
           description: 1 - Produto; 2 - Serviço;
@@ -140,7 +404,70 @@ components:
         descricao:
           type: string
           example: Descrição Exemplo
+        preco:
+          type: number
+          example: Preço do Produto/Serviço
         tipo:
           type: integer
           description: 1 - Produto; 2 - Serviço;
           example: 1
+    CadastroPedidoDTO:
+      type: object
+      required: 
+      - itens
+      properties:
+        desconto:
+          type: number
+          example: 20
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/CadastroItemPedidoDTO'
+    PedidoDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          example: d70597e7-e416-46f1-b59c-f0cbdd99b8a6
+        desconto:
+          type: number
+          example: 20
+        total:
+          type: number
+          example: 20
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetornoItemPedidoDTO'
+    CadastroItemPedidoDTO:
+      type: object
+      properties:
+        idProdutoServico:
+          type: string
+          example: d70597e7-e416-46f1-b59c-f0cbdd99b8a6
+          description: UUID do Produto/Serviço
+        quantidade:
+          type: integer
+          description: Não nulo quando for um produto
+    ItemPedidoDTO:
+      type: object
+      properties:
+        idPedido:
+          type: string
+          example: d70597e7-e416-46f1-b59c-f0cbdd99b8a6
+          description: UUID do Pedido
+        idProdutoServico:
+          type: string
+          example: d70597e7-e416-46f1-b59c-f0cbdd99b8a6
+          description: UUID do Produto/Serviço
+        quantidade:
+          type: integer
+          description: Não nulo quando for um produto
+    RetornoItemPedidoDTO:
+      type: object
+      properties:
+        produtoServico:
+          $ref: '#/components/schemas/ProdutoServicoDTO'
+        quantidade:
+          type: integer
+          description: Não nulo quando for um produto
