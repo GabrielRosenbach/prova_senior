@@ -51,6 +51,7 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 		ProdutoServico produtoServico = readProdutoServico(id);
 
 		produtoServico.setDescricao(cadastroProdutoServicoDTO.getDescricao());
+		produtoServico.setPreco(cadastroProdutoServicoDTO.getPreco());
 		produtoServico.setTipo(cadastroProdutoServicoDTO.getTipo());
 		produtoServico.setSituacao(cadastroProdutoServicoDTO.getSituacao());
 
@@ -61,11 +62,11 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 	public void deleteProdutoServico(UUID id) {
 		// Lança NotFoundException caso o id não exista
 		readProdutoServico(id);
-		
+
 		ItemPedido itemPedido = new ItemPedido();
 		itemPedido.getItemPedidoId().setIdProdutoServico(id);
 		Example<ItemPedido> example = Example.of(itemPedido, ExampleMatcher.matching());
-		
+
 		if (itemPedidoRepository.count(example) > 0) {
 			throw new InternalErrorException(MensagemServidor.EXCLUIR_PRODUTO_SERVICO_VINCULADO_PEDIDO);
 		}
@@ -78,10 +79,5 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 		return produtoServicoRepository
 				.findAll(PageRequest.of(inicio, tamanho, ascendente ? Direction.ASC : Direction.DESC, campoOrderBy))
 				.toList();
-	}
-
-	@Override
-	public Boolean exists(UUID idProdutoServico) {
-		return produtoServicoRepository.existsById(idProdutoServico);
 	}
 }

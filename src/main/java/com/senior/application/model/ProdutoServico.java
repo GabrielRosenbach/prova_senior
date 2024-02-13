@@ -1,5 +1,6 @@
 package com.senior.application.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.senior.prova.application.dto.CadastroProdutoServicoDTO;
@@ -51,6 +52,7 @@ public class ProdutoServico {
 		this.descricao = cadastroDTO.getDescricao();
 		this.preco = cadastroDTO.getPreco().floatValue();
 		this.tipo = cadastroDTO.getTipo();
+		this.situacao = cadastroDTO.getSituacao();
 	}
 
 	public void setId(UUID id) {
@@ -77,6 +79,11 @@ public class ProdutoServico {
 		this.preco = preco;
 	}
 
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco.floatValue();
+	}
+	
 	public Integer getTipo() {
 		return tipo;
 	}

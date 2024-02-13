@@ -16,8 +16,6 @@ public interface ProdutoServicoService {
 
 	public void deleteProdutoServico(UUID id);
 
-	public Boolean exists(UUID idProdutoServico);
-
 	public List<ProdutoServico> listProdutoServico(Integer inicio, Integer tamanho, Boolean ascendente,
 			String campoOrderBy);
 

@@ -1,5 +1,8 @@
 package com.senior.application.enums;
 
+import com.senior.application.constants.MensagemServidor;
+import com.senior.application.exceptions.http.InternalErrorException;
+
 /**
  * Enum do Tipo do Produto ou Serviço. Optou-se por criar um Enum, para
  * diferenciar um produto de um serviço. Também facilita caso futuramente fosse
@@ -10,6 +13,9 @@ public enum TipoProdutoServicoEnum {
 	PRODUTO(1), SERVICO(2);
 
 	private Integer codigo;
+	
+	private TipoProdutoServicoEnum() {
+	}
 
 	private TipoProdutoServicoEnum(Integer codigo) {
 		this.codigo = codigo;
@@ -27,6 +33,6 @@ public enum TipoProdutoServicoEnum {
 			}
 		}
 
-		throw new IllegalArgumentException("Invalid OrderStatus code");
+		throw new InternalErrorException(MensagemServidor.TIPO_INVALIDO_PRODUTO_SERVICO);
 	}
 }
