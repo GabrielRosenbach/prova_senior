@@ -1,7 +1,7 @@
 package com.senior.application.service.impl;
 
 import static com.senior.application.builder.CadastroProdutoServicoDTOBuilder.umCadastroProdutoDTO;
-import static com.senior.application.builder.ProdutoServicoBuilder.umProdutoServico;
+import static com.senior.application.builder.ProdutoServicoBuilder.umProduto;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
@@ -64,7 +64,7 @@ public class ProdutoServicoServiceTest {
 	public void criarProdutoServicoSucessoTest() {
 		CadastroProdutoServicoDTO cadastroDTO = umCadastroProdutoDTO().agora();
 
-		when(produtoServicoRepository.save(any())).thenReturn(umProdutoServico().agora());
+		when(produtoServicoRepository.save(any())).thenReturn(umProduto().agora());
 
 		ProdutoServico retorno = produtoServicoServiceImpl.createProdutoServico(cadastroDTO);
 
@@ -78,9 +78,9 @@ public class ProdutoServicoServiceTest {
 
 	@Test
 	public void buscarProdutoServicoSucessoTest() {
-		UUID uuid = umProdutoServico().agora().getId();
+		UUID uuid = umProduto().agora().getId();
 
-		when(produtoServicoRepository.findById(any())).thenReturn(Optional.ofNullable(umProdutoServico().agora()));
+		when(produtoServicoRepository.findById(any())).thenReturn(Optional.ofNullable(umProduto().agora()));
 
 		ProdutoServico retorno = produtoServicoServiceImpl.readProdutoServico(uuid);
 
@@ -93,7 +93,7 @@ public class ProdutoServicoServiceTest {
 		exception.expect(NotFoundException.class);
 		exception.expectMessage(MensagemServidor.PRODUTO_SERVICO_NAO_ENCONTRADO);
 
-		UUID uuid = umProdutoServico().agora().getId();
+		UUID uuid = umProduto().agora().getId();
 
 		when(produtoServicoRepository.findById(any())).thenReturn(Optional.empty());
 
@@ -102,15 +102,15 @@ public class ProdutoServicoServiceTest {
 
 	@Test
 	public void atualizarProdutoServicoSucessoTest() {
-		UUID uuid = umProdutoServico().agora().getId();
+		UUID uuid = umProduto().agora().getId();
 		CadastroProdutoServicoDTO cadastroDTO = umCadastroProdutoDTO().comDescricao("Produto 2")
 				.comPreco(BigDecimal.valueOf(50)).comSituacao(SituacaoProdutoServicoEnum.DESATIVADO.getCodigo())
 				.comTipo(TipoProdutoServicoEnum.SERVICO.getCodigo()).agora();
 
-		ProdutoServico original = umProdutoServico().agora();
+		ProdutoServico original = umProduto().agora();
 
 		when(produtoServicoRepository.findById(any())).thenReturn(Optional.of(original));
-		when(produtoServicoRepository.save(original)).thenReturn(umProdutoServico().comDescricao("Produto 2")
+		when(produtoServicoRepository.save(original)).thenReturn(umProduto().comDescricao("Produto 2")
 				.comPreco(50F).comSituacao(SituacaoProdutoServicoEnum.DESATIVADO.getCodigo())
 				.comTipo(TipoProdutoServicoEnum.SERVICO.getCodigo()).agora());
 
@@ -125,9 +125,9 @@ public class ProdutoServicoServiceTest {
 
 	@Test
 	public void deletarProdutoServicoSucessoTest() {
-		UUID uuid = umProdutoServico().agora().getId();
+		UUID uuid = umProduto().agora().getId();
 
-		when(produtoServicoRepository.findById(any())).thenReturn(Optional.of(umProdutoServico().agora()));
+		when(produtoServicoRepository.findById(any())).thenReturn(Optional.of(umProduto().agora()));
 		when(itemPedidoRepository.count(any())).thenReturn(0L);
 
 		produtoServicoServiceImpl.deleteProdutoServico(uuid);
@@ -142,9 +142,9 @@ public class ProdutoServicoServiceTest {
 		exception.expect(InternalErrorException.class);
 		exception.expectMessage(MensagemServidor.EXCLUIR_PRODUTO_SERVICO_VINCULADO_PEDIDO);
 
-		UUID uuid = umProdutoServico().agora().getId();
+		UUID uuid = umProduto().agora().getId();
 
-		when(produtoServicoRepository.findById(any())).thenReturn(Optional.of(umProdutoServico().agora()));
+		when(produtoServicoRepository.findById(any())).thenReturn(Optional.of(umProduto().agora()));
 		when(itemPedidoRepository.count(any())).thenReturn(5L);
 
 		produtoServicoServiceImpl.deleteProdutoServico(uuid);
@@ -152,7 +152,7 @@ public class ProdutoServicoServiceTest {
 
 	@Test
 	public void listarProdutoServicoSucessoTest() {
-		Page<ProdutoServico> page = new PageImpl<>(Arrays.asList(umProdutoServico().agora()));
+		Page<ProdutoServico> page = new PageImpl<>(Arrays.asList(umProduto().agora()));
 
 		when(produtoServicoRepository.findAll(any(PageRequest.class))).thenReturn(page);
 

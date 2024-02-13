@@ -68,7 +68,6 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	private List<ItemPedido> gerarItemPedido(UUID idPedido, Pedido pedido, List<CadastroItemPedidoDTO> listItemDTO) {
-
 		return listItemDTO.stream()
 				.map(itemDTO -> itemPedidoService.validarItem(Optional.ofNullable(idPedido),
 						Optional.ofNullable(pedido), UUID.fromString(itemDTO.getIdProdutoServico()),
@@ -98,10 +97,10 @@ public class PedidoServiceImpl implements PedidoService {
 	@Override
 	public Pedido updatePedido(UUID id, CadastroPedidoDTO cadastroPedidoDTO) {
 		Pedido pedido = readPedido(id);
-		
+
 		PedidoFacade.validarSituacaoFechada(pedido);
 		pedido.setSituacao(cadastroPedidoDTO.getSituacao());
-		
+
 		pedido.setDesconto(cadastroPedidoDTO.getDesconto().floatValue());
 		pedido.setItens(gerarItemPedido(id, pedido, cadastroPedidoDTO.getItens()));
 		pedido.setTotal(calcularTotal(pedido));

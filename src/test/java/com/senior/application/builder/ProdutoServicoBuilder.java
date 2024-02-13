@@ -13,7 +13,7 @@ public class ProdutoServicoBuilder {
 	private ProdutoServicoBuilder() {
 	}
 
-	public static ProdutoServicoBuilder umProdutoServico() {
+	public static ProdutoServicoBuilder umProduto() {
 		ProdutoServicoBuilder builder = new ProdutoServicoBuilder();
 		builder.produtoServico = new ProdutoServico();
 		builder.produtoServico.setId(UUID.fromString("d462ad5c-a29d-4d22-8b1a-e888bfe917e9"));
@@ -21,6 +21,18 @@ public class ProdutoServicoBuilder {
 		builder.produtoServico.setPreco(20.0F);
 		builder.produtoServico.setSituacao(SituacaoProdutoServicoEnum.ATIVADO.getCodigo());
 		builder.produtoServico.setTipo(TipoProdutoServicoEnum.PRODUTO.getCodigo());
+		
+		return builder;
+	}
+	
+	public static ProdutoServicoBuilder umServico() {
+		ProdutoServicoBuilder builder = new ProdutoServicoBuilder();
+		builder.produtoServico = new ProdutoServico();
+		builder.produtoServico.setId(UUID.fromString("0f239f50-1c67-44bd-bfc9-1706bba14271"));
+		builder.produtoServico.setDescricao("Serviço 1");
+		builder.produtoServico.setPreco(200.0F);
+		builder.produtoServico.setSituacao(SituacaoProdutoServicoEnum.ATIVADO.getCodigo());
+		builder.produtoServico.setTipo(TipoProdutoServicoEnum.SERVICO.getCodigo());
 		
 		return builder;
 	}

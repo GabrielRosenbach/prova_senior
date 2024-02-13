@@ -9,7 +9,7 @@ public class PedidoFacade {
 	
 	public static void validarSituacaoFechada(Pedido pedido) {
 		if(pedido.getSituacao().equals(SituacaoPedidoEnum.FECHADO.getCodigo())) {
-			throw new InternalErrorException(MensagemServidor.ALETARACAO_PEDIDO_FECHADO);
+			throw new InternalErrorException(MensagemServidor.ALTERACAO_PEDIDO_FECHADO);
 		}
 	}
 
