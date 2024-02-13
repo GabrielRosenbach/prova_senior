@@ -4,7 +4,6 @@ import static com.senior.application.builder.CadastroPedidoDTOBuilder.umCadastro
 import static com.senior.application.builder.ItemPedidoBuilder.umItemPedidoProduto;
 import static com.senior.application.builder.ItemPedidoBuilder.umItemPedidoServico;
 import static com.senior.application.builder.PedidoBuilder.umPedido;
-import static com.senior.application.builder.ProdutoServicoBuilder.umProduto;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
@@ -37,7 +36,6 @@ import com.senior.application.enums.SituacaoPedidoEnum;
 import com.senior.application.exceptions.http.InternalErrorException;
 import com.senior.application.exceptions.http.NotFoundException;
 import com.senior.application.model.Pedido;
-import com.senior.application.model.ProdutoServico;
 import com.senior.application.repository.PedidoRepository;
 import com.senior.application.service.ItemPedidoService;
 import com.senior.prova.application.dto.CadastroPedidoDTO;

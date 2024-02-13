@@ -40,6 +40,11 @@ public class ItemPedidoBuilder {
 
 		return builder;
 	}
+	
+	public ItemPedidoBuilder comQuantidade(Integer quantidade) {
+		itemPedido.setQuantidade(quantidade);
+		return this;
+	}
 
 	private static Pedido umPedido() {
 		Pedido pedido = new Pedido();

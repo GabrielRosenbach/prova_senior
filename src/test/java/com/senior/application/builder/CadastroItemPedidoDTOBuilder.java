@@ -26,6 +26,11 @@ public class CadastroItemPedidoDTOBuilder {
 		return builder;
 	}
 	
+	public CadastroItemPedidoDTOBuilder comQuantidade(Integer quantidade) {
+		cadastroItemPedidoDTO.setQuantidade(quantidade);
+		return this;
+	}
+	
 	public CadastroItemPedidoDTO agora() {
 		return cadastroItemPedidoDTO;
 	}

@@ -91,7 +91,7 @@ public class ItemPedido {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(itemPedidoId, pedido, produtoServico, quantidade);
