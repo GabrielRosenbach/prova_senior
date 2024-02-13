@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.senior.application.constants.MensagemServidor;
 import com.senior.application.exceptions.http.InternalErrorException;
+import com.senior.application.exceptions.http.NotFoundException;
 import com.senior.application.model.ItemPedido;
 import com.senior.application.model.ProdutoServico;
 import com.senior.application.repository.ItemPedidoRepository;
@@ -21,6 +22,9 @@ import com.senior.application.service.ProdutoServicoService;
 import com.senior.application.util.OptionalUtil;
 import com.senior.prova.application.dto.CadastroProdutoServicoDTO;
 
+/**
+ * Classe de serviço de Produto/Serviço
+ */
 @Service
 public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 
@@ -30,6 +34,12 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
+	/**
+	 * Cria um produto/Serviço
+	 * 
+	 * @param cadastroProdutoServicoDTO Objeto de cadastro de um produto/serviço
+	 * @return ProdutoServico referente
+	 */
 	@Override
 	@Transactional
 	public ProdutoServico createProdutoServico(CadastroProdutoServicoDTO cadastroProdutoServicoDTO) {
@@ -39,12 +49,26 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 		return produtoServicoRepository.save(produtoServico);
 	}
 
+	/**
+	 * Busca um produto/serviço
+	 * 
+	 * @param id UUID do produto/serviço
+	 * @return ProdutoServico refernte
+	 * @exception NotFoundException caso o pedido não for encontrado na base.
+	 */
 	@Override
 	public ProdutoServico readProdutoServico(UUID id) {
 		return OptionalUtil.tratarOptional(produtoServicoRepository.findById(id),
 				MensagemServidor.PRODUTO_SERVICO_NAO_ENCONTRADO);
 	}
 
+	/**
+	 * Atualiza um produto/serviço
+	 * 
+	 * @param id                        UUID do produto/serviço
+	 * @param cadastroProdutoServicoDTO Objeto de cadastro de produto/serviço
+	 * @return ProdutoServico referente
+	 */
 	@Override
 	public ProdutoServico updateProdutoServico(UUID id, CadastroProdutoServicoDTO cadastroProdutoServicoDTO) {
 
@@ -58,9 +82,13 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 		return produtoServicoRepository.save(produtoServico);
 	}
 
+	/**
+	 * Exclui um produto/serviço
+	 * @param id UUID do produto/serviço
+	 * @exception InternalErrorException caso o produto estiver vinculado em pedido
+	 */
 	@Override
 	public void deleteProdutoServico(UUID id) {
-		// Lança NotFoundException caso o id não exista
 		readProdutoServico(id);
 
 		ItemPedido itemPedido = new ItemPedido();
@@ -73,6 +101,15 @@ public class ProdutoServicoServiceImpl implements ProdutoServicoService {
 		produtoServicoRepository.deleteById(id);
 	}
 
+	/**
+	 * Lista os produtos/serviços cadastrados
+	 * 
+	 * @param inicio       Inicio da paginação
+	 * @param tamanho      Tamanho da paginação
+	 * @param ascendente   Boolean se busca é ascendente ou descendente
+	 * @param campoOrderBy campo que será considerado para a ordenação
+	 * @return Lista de ProdutoServico
+	 */
 	@Override
 	public List<ProdutoServico> listProdutoServico(Integer inicio, Integer tamanho, Boolean ascendente,
 			String campoOrderBy) {

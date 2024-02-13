@@ -44,6 +44,15 @@ public class ProdutoServicoControllerImpl implements ProdutoServicoApi {
 				.body(produtoServicoDTO);
 	}
 
+	/**
+	 * Lista os produtos/serviços
+	 * 
+	 * @param inicio       Inicio da paginação
+	 * @param tamanho      Tamanho da paginação
+	 * @param ascendente   Boolean se busca é ascendente ou descendente
+	 * @param campoOrderBy campo que será considerado para a ordenação
+	 * @return Lista de ProdutoServicoDTO
+	 */
 	@Override
 	public ResponseEntity<List<ProdutoServicoDTO>> listProdutoServico(Integer inicio, Integer tamanho,
 			Boolean ascendente, String campoOrderBy) {

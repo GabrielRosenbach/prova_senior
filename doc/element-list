@@ -1,1 +1,16 @@
+com.senior.application
+com.senior.application.builder
+com.senior.application.config
+com.senior.application.constants
+com.senior.application.controller
+com.senior.application.enums
+com.senior.application.exceptions.http
+com.senior.application.facade
+com.senior.application.model
+com.senior.application.model.id
 com.senior.application.repository
+com.senior.application.service
+com.senior.application.service.impl
+com.senior.application.util
+com.senior.prova.application.api
+com.senior.prova.application.dto

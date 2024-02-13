@@ -96,6 +96,16 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 		}
 	}
 
+	/**
+	 * Lista os itens de um pedido
+	 * 
+	 * @param idPedido     UUID do pedido em formato string
+	 * @param inicio       Inicio da paginação
+	 * @param tamanho      Tamanho da paginação
+	 * @param ascendente   Boolean se busca é ascendente ou descendente
+	 * @param campoOrderBy campo que será considerado para a ordenação
+	 * @return Lista de ItemPedidoDTO
+	 */
 	@Override
 	public ResponseEntity<List<ItemPedidoDTO>> listItensPedido(String idPedido, Integer inicio, Integer tamanho,
 			Boolean ascendente, String campoOrderBy) {
@@ -103,6 +113,15 @@ public class ItemPedidoControllerImpl implements ItemPedidoApi {
 				tamanho, ascendente, campoOrderBy)));
 	}
 
+	/**
+	 * Lista os itens de todos os pedidos
+	 * 
+	 * @param inicio       Inicio da paginação
+	 * @param tamanho      Tamanho da paginação
+	 * @param ascendente   Boolean se busca é ascendente ou descendente
+	 * @param campoOrderBy campo que será considerado para a ordenação
+	 * @return Lista de ItemPedidoDTO
+	 */
 	@Override
 	public ResponseEntity<List<ItemPedidoDTO>> listItensPedidos(Integer inicio, Integer tamanho, Boolean ascendente,
 			String campoOrderBy) {

@@ -58,6 +58,15 @@ public class PedidoControllerImpl implements PedidoApi {
 		}
 	}
 
+	/**
+	 * Lista os pedidos
+	 * 
+	 * @param inicio       Inicio da paginação
+	 * @param tamanho      Tamanho da paginação
+	 * @param ascendente   Boolean se busca é ascendente ou descendente
+	 * @param campoOrderBy campo que será considerado para a ordenação
+	 * @return Lista de PedidoDTO
+	 */
 	@Override
 	public ResponseEntity<List<PedidoDTO>> listPedido(Integer inicio, Integer tamanho, Boolean ascendente,
 			String campoOrderBy) {
